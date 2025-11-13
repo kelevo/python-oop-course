@@ -1,4 +1,5 @@
 from typing import Protocol
+from exceptions import BibliotecaError, TituloInvalidoError
 
 class SolcitanteProtocol(Protocol):
   def solicitar_libro(self, titulo: str) -> str:
@@ -8,7 +9,7 @@ class SolcitanteProtocol(Protocol):
 class Usuario:
   def __init__(self, nombre, curp):
     self.nombre = nombre
-    self.edad = curp
+    self.curp = curp
     self.libros_prestados = []
 
   def solicitar_libro(self, titulo):
@@ -22,11 +23,14 @@ class Estudiante(Usuario):
     self.limite_libros = 3
 
   def solicitar_libro(self, titulo):
+    if not titulo:
+      raise TituloInvalidoError(f"El título {titulo} del libro no puede estar vacío.")
+
     if (len(self.libros_prestados) >= self.limite_libros):
       return "Has alcanzado el límite de libros prestados."
     else:
       self.libros_prestados.append(titulo)
-      return f"Se ha solicitado el libro: {titulo}"
+      return f"Prestamo del libro: {titulo} autorizado."
   
 
 class Profesor(Usuario):

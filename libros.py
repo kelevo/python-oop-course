@@ -1,4 +1,5 @@
 from typing import Protocol
+from exceptions import LibroNoDisponibleError
 
 class LibroProtocol(Protocol):
 	def prestar(self) -> str:
@@ -24,24 +25,26 @@ class Libro:
 
 	def __str__(self):
 		return f"{self.titulo} por {self.autor}, Available: {self.disponible}"
-    
+		
 	def prestar(self):
+		if not self.disponible:
+			raise LibroNoDisponibleError(f"El libro {self.titulo} no está disponible para préstamo.")
+
 		if self.disponible:
 			self.disponible = False
 			self.__veces_prestado += 1
-			return f"{self.titulo} hse ha prestado. -- Número total de veces que se ha prestado.: {self.__veces_prestado}"
-		return f"{self.titulo} -- Actualmente no está disponible."
+			return f"{self.titulo} Se ha prestado. -- Número total de veces que se ha prestado.: {self.__veces_prestado}"
 
 	def devolver(self):
 		self.disponible = True
 		return f"{self.titulo} Ha sido devuelto."
-	
+
 	def es_popular(self):
 		return self.__veces_prestado > 5
-	
+
 	def get_veces_prestado(self):
 		return self.__veces_prestado
-	
+
 	def set_veces_prestado(self, times):
 		self.__veces_prestado = times
 
