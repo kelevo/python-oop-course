@@ -1,3 +1,4 @@
+from abc import ABC, abstractmethod
 from typing import Protocol
 from exceptions import BibliotecaError, TituloInvalidoError
 
@@ -6,7 +7,12 @@ class SolcitanteProtocol(Protocol):
     """Metodo que debe implementar cualquier solicitante"""
     ...
 
-class Usuario:
+class UsuarioBase(ABC):
+  @abstractmethod
+  def solicitar_libro(self):
+    pass
+
+class Usuario(UsuarioBase):
   def __init__(self, nombre, curp):
     self.nombre = nombre
     self.curp = curp
