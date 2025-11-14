@@ -28,6 +28,10 @@ class Libro(LibroBase):
 		self.isbn = isbn
 		self.disponible = disponible
 		self.__veces_prestado = 0
+		
+	@classmethod
+	def crear_no_disponible(cls, titulo, autor, isbn):
+		return cls(titulo, autor, isbn, disponible = False)
 
 	def __str__(self):
 		return f"{self.titulo} por {self.autor}, Available: {self.disponible}"
@@ -44,6 +48,9 @@ class Libro(LibroBase):
 	def devolver(self):
 		self.disponible = True
 		return f"{self.titulo} Ha sido devuelto."
+	
+	def calcular_duracion(self):
+		return "La duración del préstamo para libros físicos es de 7 días."
 
 	@property
 	def es_popular(self):

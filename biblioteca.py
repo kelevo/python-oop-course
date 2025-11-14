@@ -35,3 +35,7 @@ class Biblioteca:
 		
 		self.libros.append(nuevo_libro)
 		return f"El libro {titulo} ha sido agregado a la biblioteca."
+	
+	@staticmethod
+	def validar_isbn(isbn):
+		return len(isbn) >= 10
