@@ -1,3 +1,4 @@
+from abc import ABC, abstractmethod
 from typing import Protocol
 from exceptions import LibroNoDisponibleError
 
@@ -14,7 +15,12 @@ class LibroProtocol(Protocol):
 		"""Metodo para calcular la duración del préstamo"""
 		...
 
-class Libro:
+class LibroBase(ABC):
+	@abstractmethod
+	def calcular_duracion(self):
+		pass
+
+class Libro(LibroBase):
   
 	def __init__(self, titulo, autor, isbn, disponible = True):
 		self.titulo = titulo
@@ -39,15 +45,23 @@ class Libro:
 		self.disponible = True
 		return f"{self.titulo} Ha sido devuelto."
 
+	@property
 	def es_popular(self):
 		return self.__veces_prestado > 5
 
-	def get_veces_prestado(self):
+	@property
+	def veces_prestado(self):
 		return self.__veces_prestado
 
-	def set_veces_prestado(self, times):
-		self.__veces_prestado = times
-
+	@veces_prestado.setter
+	def veces_prestado(self, times):
+		if self.__veces_prestado >= 0:
+			self.__veces_prestado = times
+		raise ValueError("El número de veces prestado no puede ser negativo.")
+	
+	@property
+	def descripcion_completa(self):
+		return f"Título: {self.titulo}, Autor: {self.autor}, ISBN: {self.isbn}, Disponible: {self.disponible}, Veces prestado: {self.__veces_prestado}"
 
 class LibroFisico(Libro):
 	def calcular_duracion(self):

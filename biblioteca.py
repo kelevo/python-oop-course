@@ -10,7 +10,7 @@ class Biblioteca:
 
 	def libros_disponibles(self):
 		return [
-      libro.titulo
+      libro
       for libro in self.libros
       if libro.disponible
 		]

@@ -21,7 +21,10 @@ class Usuario(UsuarioBase):
   def solicitar_libro(self, titulo):
     return f"Se ha solicitado el libro: {titulo}"
   
-
+  @property
+  def nombre_completo(self):
+    return f"{self.nombre} - CURP: {self.curp}"
+  
 class Estudiante(Usuario):
   def __init__(self, nombre, curp, carrera):
     super().__init__(nombre, curp)

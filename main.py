@@ -16,8 +16,8 @@ biblioteca.libros = data_libros
 
 print("Bienvenido a la biblioteca")
 print("Libros disponibles para préstamo:")
-for titulo in biblioteca.libros_disponibles():
-	print(f"- {titulo}")
+for libro in biblioteca.libros_disponibles():
+	print(libro.descripcion_completa)
 
 print()
 
